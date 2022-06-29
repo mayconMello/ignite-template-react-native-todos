@@ -38,6 +38,7 @@ export function TasksList({
               item={item}
               toggleTaskDone={toggleTaskDone}
               removeTask={removeTask}
+              editTask={editTask}
             />
           </ItemWrapper>
         )
