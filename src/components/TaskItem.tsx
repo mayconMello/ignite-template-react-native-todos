@@ -27,7 +27,7 @@ export function TaskItem({
 }: TaskItemProps) {
 
   const [edit, setEdit] = useState(false);
-  const [newTitle, setNewTitle] = useState('');
+  const [newTitle, setNewTitle] = useState(item.title);
   const textInputRef = useRef<TextInput>(null);
 
   function handleStartEditing() {
@@ -35,7 +35,7 @@ export function TaskItem({
   }
 
   function handleCancelEditing() {
-    editTask(item.id, item.title);
+    setNewTitle(item.title);
     setEdit(false);
   }
 
@@ -48,15 +48,12 @@ export function TaskItem({
     if (textInputRef.current) {
       if (edit) {
         textInputRef.current.focus();
-      } else {
-        textInputRef.current.blur();
+        return
       }
+      textInputRef.current.blur();
+
     }
   }, [edit])
-
-  useEffect(() => {
-    setNewTitle(item.title)
-  }, [item.title])
 
   return (
     <>
@@ -66,6 +63,7 @@ export function TaskItem({
           activeOpacity={0.7}
           style={styles.taskButton}
           onPress={() => toggleTaskDone(item.id)}
+          disabled={edit}
         >
           <View
             testID={`marker-${index}`}
